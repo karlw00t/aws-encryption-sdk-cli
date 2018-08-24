@@ -4,3 +4,7 @@ phases:
   install:
     commands:
       - pip install troposphere
+
+  build: 
+    commands:
+      - python codebuild/sam/template.py > codebuild/sam/template.json
