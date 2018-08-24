@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - pip install troposphere
+      - pip install troposphere awacs
 
   build: 
     commands:
