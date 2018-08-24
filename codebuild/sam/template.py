@@ -16,6 +16,22 @@ def create_template():
         NoEcho=True,
     ))
 
+    owner = t.add_parameter(Parameter(
+        "Owner",
+        Type="String",
+    ))
+
+    repo = t.add_parameter(Parameter(
+        "Repo",
+        Type="String",
+    ))
+
+    branch = t.add_parameter(Parameter(
+        "Branch",
+        Type="String",
+    ))
+
+
     artifact_bucket =  t.add_resource(Bucket('ArtifactBucket',
     ))
 
