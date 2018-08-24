@@ -1,5 +1,6 @@
-from troposphere import Template, Parameter, Sub
+from troposphere import Template, Parameter, Sub, Ref
 from troposphere.sqs import Queue
+from troposphere.codebuild import Project, Artifacts, Environment, Source, SourceAuth, ProjectTriggers
 
 from awacs.aws import Action, Allow, PolicyDocument, Principal, Statement, Policy
 from troposphere.iam import Role, Policy as iamPolicy
@@ -84,6 +85,29 @@ def create_template():
     artifact_bucket =  t.add_resource(Bucket('ArtifactBucket'))
     
     cd_role = t.add_resource(code_build_service_role(artifact_bucket))
+
+    code_build = t.add_resource(Project('CodeBuild',
+        Name=STACK_NAME,
+        Artifacts=Artifacts(
+            Type='NO_ARTIFACTS',
+        ),
+        Environment=Environment(
+            ComputeType='BUILD_GENERAL1_SMALL',
+            Image='aws/codebuild/python:3.6.5',
+            Type='LINUX_CONTAINER',
+        ),
+        ServiceRole=Ref(cd_role),
+        Source=Source(
+            Type='GITHUB',
+            Auth=SourceAuth(
+                Type='OAUTH',
+            ),
+            Location='https://github.com/karlw00t/aws-encryption-sdk-cli.git',
+        ),
+        Triggers=ProjectTriggers(
+            Webhook=True,
+        ),
+    ))
 
     return t.to_dict()
 
