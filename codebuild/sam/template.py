@@ -8,6 +8,7 @@ import json
 def create_template():
     t = Template()
 
+
     oauth_token = t.add_parameter(Parameter(
         "GitHubOAuthToken",
         Description="Secret for github",
