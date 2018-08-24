@@ -9,6 +9,6 @@ phases:
     commands:
       - python codebuild/sam/template.py > codebuild/sam/template.json
 
-  artifacts: 
-    files:
-      - codebuild/sam/template.json
+artifacts: 
+  files:
+    - codebuild/sam/template.json
