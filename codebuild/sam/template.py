@@ -1,14 +1,25 @@
-from troposphere import Template
+from troposphere import Template, Parameter
 from troposphere.sqs import Queue
+
+from troposphere.s3 import Bucket
 
 import json
 
 def create_template():
-    template = Template()
+    t = Template()
 
-    template.add_resource(Queue('MrQueue'))
+    oauth_token = t.add_parameter(Parameter(
+        "GitHubOAuthToken",
+        Description="Secret for github",
+        Type="AWS::SSM::Parameter::Value<String>",
+        Default="oauth",
+        NoEcho=True,
+    ))
 
-    return template.to_dict()
+    artifact_bucket =  t.add_resource(Bucket('ArtifactBucket',
+    ))
+
+    return t.to_dict()
 
 if __name__ == "__main__": 
     print(json.dumps(create_template()))
