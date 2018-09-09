@@ -31,7 +31,7 @@ The latest full documentation can be found at `Read the Docs`_.
 Find us on `GitHub`_.
 
 ***************
-Getting Started
+Geting Started
 ***************
 
 Required Prerequisites
